@@ -1,0 +1,9 @@
+[server]
+# Cloud Run sends traffic to the container on port 8080. Listen on every
+# interface so the service is reachable outside the container.
+address = "0.0.0.0"
+port = 8080
+headless = true
+
+[browser]
+gatherUsageStats = false
