@@ -1,0 +1,19 @@
+# Core Framework & Agent Orchestration
+google-adk>=2.9.2
+google-genai>=1.0.0
+
+# User Interface & Visualizations
+streamlit>=1.35.0
+plotly>=5.20.0
+pydeck>=0.9.0
+
+# Data Processing & API Client
+pandas>=2.0.0
+httpx>=0.27.0
+pydantic>=2.7.0
+python-dotenv>=1.0.0
+
+# Testing & Notebooks
+pytest>=8.0.0
+ipykernel>=6.0.0
+nbformat>=4.2.0
