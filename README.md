@@ -1,5 +1,5 @@
 # 🍃 AI Clean Air Investigator
-### Secure AI for Sustainability — Workshop & Application
+### Secure AI for Sustainability: Workshop & Application
 
 An educational AI-powered environmental investigation system that uses real **OpenAQ** air-quality data, **Google ADK**, **Gemini**, and **Streamlit** to investigate pollution patterns, visualize station observations, and explain possible contributing factors while enforcing strict AI security boundaries.
 
@@ -123,7 +123,7 @@ pytest -v
 ### 4. Running the Streamlit Dashboard
 Launch the interactive environmental investigation dashboard:
 ```bash
-streamlit run app/streamlit_app.py
+streamlit run app/streamlit_app.py --server.port 8051 --server.address 0.0.0.0
 ```
 Open your browser at `http://localhost:8501`. Features include:
 - **Filters**: Select station regions (Delhi / Anand Vihar, Pusa, Mandir Marg) or custom coordinates.
@@ -182,18 +182,32 @@ Clean Air Agent (.venv)
 - Serverless scale-to-zero (`min-instances = 0`) to prevent unexpected idle costs.
 - Containerized with non-root security standards.
 
-### Option A: Deploy with Google Cloud CLI
+### Deploy the Streamlit portal
+
+Run this command from the repository root. The source deployment uses this
+repository's `Dockerfile`, whose container command starts Streamlit at `/`.
+
 ```bash
-gcloud run deploy clean-air-investigator \
+gcloud run deploy clean-air-investigator-portal \
   --source . \
   --region us-central1 \
+  --port 8080 \
   --allow-unauthenticated \
   --min-instances 0 \
   --max-instances 2 \
   --set-env-vars GEMINI_MODEL=gemini-2.5-flash,OPENAQ_API_KEY=$OPENAQ_API_KEY,GOOGLE_API_KEY=$GOOGLE_API_KEY
 ```
 
-### Option B: Deploy with Google ADK CLI
+After deployment, open the URL printed by this command. The service name must
+be `clean-air-investigator-portal`; a URL for `adk-default-service-name` is the
+ADK API service and is not the Streamlit portal.
+
+### Optional: deploy the ADK API separately
+
+This command creates an API-only service backed by Uvicorn/FastAPI. Its root
+path may return `404`; use `/docs` for its API documentation. Do not use this
+command to deploy the Streamlit portal.
+
 ```bash
 adk deploy cloud_run \
   --project=$GOOGLE_CLOUD_PROJECT \
